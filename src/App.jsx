@@ -44,30 +44,36 @@ function Calculator() {
   }
 
   function displayValue() {
-    if (txtvalue === '') {
-      return 0;
+    if (txtvalue.length === 0) {
+      return '0';
+    }else if(txtvalue === '.'){
+      return '0.';
+    }else{
+      return parseFloat(txtvalue).toLocaleString();
     }
-    return parseFloat(txtvalue).toLocaleString();
+    
   }
 
   function handleEqual() {
+
     if (operation === '÷') {
-      setTxtvalue(previValue / txtvalue);
+
+      setTxtvalue(parseFloat(previValue) / parseFloat(txtvalue));
       setPreviValue('');
       setOperation('');
     }
     else if (operation === '×') {
-      setTxtvalue(previValue * txtvalue);
+      setTxtvalue(parseFloat(previValue) * parseFloat(txtvalue));
       setPreviValue('');
       setOperation('');
     }
     else if (operation === '-') {
-      setTxtvalue(previValue - txtvalue);
+      setTxtvalue(parseFloat(previValue) - parseFloat(txtvalue));
       setPreviValue('');
       setOperation('');
     }
     else if (operation === '+') {
-      setTxtvalue(previValue + txtvalue);
+      setTxtvalue(parseFloat(previValue) + parseFloat(txtvalue));
       setOperation('');
       setPreviValue('');
     }
