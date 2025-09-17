@@ -15,21 +15,32 @@ function CalButtons({ children, className, ...rest }) {
 
 function Calculator() {
   const [txtvalue, setTxtvalue] = useState('');
+  const [previValue, setPreviValue] = useState('');
+  const [operation, setOperation] = useState('');
+
 
   function handleClick(i) {
     setTxtvalue((prev) => prev + i);
   }
 
-  function handleclear(){
+  function handleclear() {
     setTxtvalue('');
+    setPreviValue('');
+    setOperation('');
   }
 
   function handlePercentage() {
-    setTxtvalue((prev) => prev/100);
+    setTxtvalue((prev) => prev / 100);
   }
 
   function handleSquareRoot() {
     setTxtvalue((prev) => Math.sqrt(prev));
+  }
+
+  function handleOperation(operation) {
+    setOperation(operation);
+    setPreviValue(txtvalue);
+    setTxtvalue('');
   }
 
   function displayValue() {
@@ -37,6 +48,29 @@ function Calculator() {
       return 0;
     }
     return parseFloat(txtvalue).toLocaleString();
+  }
+
+  function handleEqual() {
+    if (operation === '÷') {
+      setTxtvalue(previValue / txtvalue);
+      setPreviValue('');
+      setOperation('');
+    }
+    else if (operation === '×') {
+      setTxtvalue(previValue * txtvalue);
+      setPreviValue('');
+      setOperation('');
+    }
+    else if (operation === '-') {
+      setTxtvalue(previValue - txtvalue);
+      setPreviValue('');
+      setOperation('');
+    }
+    else if (operation === '+') {
+      setTxtvalue(previValue + txtvalue);
+      setOperation('');
+      setPreviValue('');
+    }
   }
 
 
@@ -47,33 +81,33 @@ function Calculator() {
       </div>
       <div className='grid grid-cols-4 gap-5'>
 
-        <CalButtons className='bg-red-300' onClick={()=> handleclear()}>C</CalButtons>
-        <CalButtons className='bg-red-300' onClick={()=> handlePercentage()}>%</CalButtons>
-        <CalButtons className='bg-red-300' onClick={()=> handleSquareRoot()}>√</CalButtons>
-        <CalButtons className='bg-amber-400 hover:brightness-90 hover:text-gray-700'>÷</CalButtons>
+        <CalButtons className='bg-red-300' onClick={() => handleclear()}>C</CalButtons>
+        <CalButtons className='bg-red-300' onClick={() => handlePercentage()}>%</CalButtons>
+        <CalButtons className='bg-red-300' onClick={() => handleSquareRoot()}>√</CalButtons>
+        <CalButtons className='bg-amber-400 hover:brightness-90 hover:text-gray-700' onClick={() => handleOperation('÷')}>÷</CalButtons>
 
 
         <CalButtons onClick={() => handleClick('7')}>7</CalButtons>
-        <CalButtons onClick={()=> handleClick('8')}>8</CalButtons>
+        <CalButtons onClick={() => handleClick('8')}>8</CalButtons>
         <CalButtons onClick={() => handleClick('9')}>9</CalButtons>
-        <CalButtons className='bg-amber-400 hover:brightness-90 hover:text-gray-700'>×</CalButtons>
+        <CalButtons className='bg-amber-400 hover:brightness-90 hover:text-gray-700' onClick={() => handleOperation('×')}>×</CalButtons>
 
 
         <CalButtons onClick={() => handleClick('4')}>4</CalButtons>
         <CalButtons onClick={() => handleClick('5')}>5</CalButtons>
         <CalButtons onClick={() => handleClick('6')}>6</CalButtons>
-        <CalButtons className='bg-amber-400 hover:brightness-90 hover:text-gray-700'>-</CalButtons>
+        <CalButtons className='bg-amber-400 hover:brightness-90 hover:text-gray-700' onClick={() => handleOperation('-')}>-</CalButtons>
 
 
         <CalButtons onClick={() => handleClick('1')}>1</CalButtons>
-        <CalButtons onClick = {() => handleClick('2')}>2</CalButtons>
-        <CalButtons onClick= {() => handleClick('3')}>3</CalButtons>
-        <CalButtons className='bg-amber-400 hover:brightness-90 hover:text-gray-700'>+</CalButtons>
+        <CalButtons onClick={() => handleClick('2')}>2</CalButtons>
+        <CalButtons onClick={() => handleClick('3')}>3</CalButtons>
+        <CalButtons className='bg-amber-400 hover:brightness-90 hover:text-gray-700' onClick={() => handleOperation('+')}>+</CalButtons>
 
 
         <CalButtons className='col-span-2 aspect-auto' onClick={() => handleClick('0')}>0</CalButtons>
         <CalButtons onClick={() => handleClick('.')}>.</CalButtons>
-        <CalButtons className='bg-emerald-400'>=</CalButtons>
+        <CalButtons className='bg-emerald-400' onClick={handleEqual}>=</CalButtons>
       </div>
     </div>
   )
