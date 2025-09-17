@@ -2,6 +2,7 @@ import React from 'react'
 import { twMerge } from 'tailwind-merge';
 import { useState } from 'react';
 
+
 function CalButtons({ children, className, ...rest }) {
   return (
     <button className={twMerge('bg-gray-300 aspect-square rounded-2xl py-3 shadow-sm text-gray-700 hover:brightness-85 transition-all duration-100 cursor-pointer active:brightness-80 active:text-gray-900 active:text-2xl active:font-bold text-3xl', className)}
@@ -17,16 +18,18 @@ function Calculator() {
   const [txtvalue, setTxtvalue] = useState('');
   const [previValue, setPreviValue] = useState('');
   const [operation, setOperation] = useState('');
+  
+
 
 
   function handleClick(i) {
-    setTxtvalue((prev) => prev + i);
+    setTxtvalue((prev) => prev + i); 
   }
 
   function handleclear() {
     setTxtvalue('');
     setPreviValue('');
-    setOperation('');
+    setOperation('');    
   }
 
   function handlePercentage() {
@@ -41,6 +44,7 @@ function Calculator() {
     setOperation(operation);
     setPreviValue(txtvalue);
     setTxtvalue('');
+    
   }
 
   function displayValue() {
@@ -83,7 +87,8 @@ function Calculator() {
   return (
     <div className='bg-white rounded-2xl p-5 '>
       <div className='h-16 text-4xl text-right bg-gray-100 text-gray-800 rounded-xl p-3 shadow-sm mb-5 overflow-x-auto'>
-        {displayValue()}
+        {displayValue().length > 14 ? displayValue().slice(0, 14) + "..." : displayValue()}
+        
       </div>
       <div className='grid grid-cols-4 gap-5'>
 
@@ -127,6 +132,8 @@ function App() {
 
     <div className="text-center bg-linear-to-br from-slate-700 to-slate-950 min-h-screen flex justify-center items-center">
       <Calculator />
+      <div className='absolute bottom-6 text-gray-400 text-sm'>Made with &#10084;  by <a href="https://github.com/Desh524" target='blank' rel="noopener noreferrer"><b >DeshCode</b></a></div>
+      <div className='absolute bottom-1 text-gray-500 text-xs'>Version 1.0.0</div>
     </div>
 
 
